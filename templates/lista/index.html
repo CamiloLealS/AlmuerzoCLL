@@ -46,25 +46,20 @@ background: radial-gradient(circle, rgba(220,228,242,1) 0%, rgba(158,227,225,1) 
                     <h2>Menú del Día</h2>
                     <hr>
                     <div id="contMenu">
-                        {% for menu in menus  %}
-                        <h4 style="display: inline;">Entrada: </h4>
-                        <h5 style="display: inline;">{{menu.entrada}}</h5><br>
-                        <h4 style="display: inline;">Fondo: </h4>
-                        <h5 style="display: inline;">{{menu.fondo}}</h5><br>
-                        <h4 style="display: inline;">Postre: </h4>
-                        <h5 style="display: inline;">{{menu.postre}}</h5><br>
-                        <h4 style="display: inline;">Hipocalórico: </h4>
-                        <h5 style="display: inline;">{{menu.hipocal}}</h5><br><br>
-                        {% endfor %}
+                        <h4 style="display: inline;">Entrada: {{ menu_dia.entrada }}</h4><br>
+                        <h4 style="display: inline;">Fondo: {{ menu_dia.fondo }} </h4><br>
+                        <h4 style="display: inline;">Postre: {{ menu_dia.postre }} </h4><br>
+                        <h4 style="display: inline;">Hipocalórico: {{ menu_dia.hipocal }} </h4><br><br>
                     </div>
                     {% if user.usuario_admin == True %}
                     <button id="btnEdit" class="btn btn-primary">Editar Menú</button>
                     <div style="display: none; padding-top: 10px;" id="inputMenu">
-                        <form method="get">
+                        <form action="{% url 'editMenu' %}" method="post">
+                            {% csrf_token %}
                             <input style="display: block; margin-bottom: 10px;" name="entrada" type="text" placeholder="Entrada">
                             <input style="display: block; margin-bottom: 10px;" name="fondo" type="text" placeholder="Fondo">
                             <input style="display: block; margin-bottom: 10px;" name="postre" type="text" placeholder="Postre">
-                            <input style="display: block; margin-bottom: 10px;" name="hipo" type="text" placeholder="Hipocalórico">
+                            <input style="display: block; margin-bottom: 10px;" name="hipocal" type="text" placeholder="Hipocalórico">
                             <button class="btn btn-primary" id="btnConfirm" type = "submit" style="display: none;">Confirmar Menú</button>
                         </form>
                     </div>
@@ -117,6 +112,7 @@ background: radial-gradient(circle, rgba(220,228,242,1) 0%, rgba(158,227,225,1) 
 
     </main>
 </body>
+
 <script type="text/javascript">
     function exportTableToExcel(tableID, filename = '') {
         var downloadLink;
@@ -156,6 +152,7 @@ background: radial-gradient(circle, rgba(220,228,242,1) 0%, rgba(158,227,225,1) 
         return fecha.toLocaleDateString();
     }
 </script>
+{% if user.usuario_admin %}
 <script>
     const inp = document.getElementById('inputMenu');
     const btnEd = document.getElementById('btnEdit');
@@ -173,5 +170,6 @@ background: radial-gradient(circle, rgba(220,228,242,1) 0%, rgba(158,227,225,1) 
         inp.style.display = 'none';
     });
 </script>
+{% endif %}
 
 </html>

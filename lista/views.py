@@ -1,11 +1,12 @@
 from typing import Any
 from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
-from django.views.generic.list import ListView
+from django.views.generic import ListView, CreateView
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .models import menu
+from .forms import menuForm
 from usuario.models import usuario
 from django.template import RequestContext
 from django.contrib import messages
@@ -14,8 +15,9 @@ from django.contrib import messages
 @login_required
 def Home(request):
     users = usuario.objects.filter(diario = True)
+    menu_dia = menu.objects.first()
 
-    return render(request, 'lista/index.html', {'users': users})
+    return render(request, 'lista/index.html', {'users': users, 'menu_dia' : menu_dia})
     
 def regDiario(request, id):
     try:
@@ -48,23 +50,17 @@ def delRegAdmin(request):
 
     return redirect(to='index')
 
-def verMenu(request):
-    menus = menu.objects.all()
-
-    return render(request, 'lista/index.html', {'menus': menus})
-
 def cambiarMenu(request):
-    entrada = request.GET.get('entrada')
-    fondo = request.GET.get('fondo')
-    postre = request.GET.get('postre')
-    hipocal = request.GET.get('hipo')
+    if request.method == 'POST':
+        form = menuForm(request.POST)
+        if form.is_valid():
+            menu.objects.all().delete()
+            form.save()
+            print(menu.objects.first())
 
-    menus = menu.objects.get(pk = 1)
-    menus.entrada = entrada
-    menus.fondo = fondo
-    menus.postre = postre
-    menus.hipocal = hipocal
-    menus.save()
+            return redirect(to='index')
+    else:
+        form = menuForm()
     
+    return render(request, 'lista/index.html',{'form':form})
 
-    return redirect(to='index')

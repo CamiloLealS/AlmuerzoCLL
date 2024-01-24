@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from usuario.views import loginUsuario, logoutUsuario, registrarUsuario
 from django.contrib.auth.decorators import login_required
-from lista.views import Home,regDiario,delRegAdmin,delRegDiario
+from lista.views import Home,regDiario,delRegAdmin,delRegDiario,cambiarMenu
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +28,7 @@ urlpatterns = [
     path('lista/reg/<int:id>',regDiario,name='regDiario'),
     path('lista/delreg/<int:id>',delRegDiario,name='delDiario'),
     path('lista/delAll/',delRegAdmin,name='delAll'),
+    path('lista/edit/',cambiarMenu, name= 'editMenu'),
     path('accounts/login/',loginUsuario.as_view(),name = "login"),
     path('usuario/regUser/',registrarUsuario.as_view(), name = 'regUser'),
     path('logout/',login_required(logoutUsuario), name= 'logout')
