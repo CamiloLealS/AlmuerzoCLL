@@ -1,0 +1,59 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+</head>
+<body style="background: rgb(220,228,242);
+background: radial-gradient(circle, rgba(220,228,242,1) 0%, rgba(158,227,225,1) 100%);">
+    <header class="shadow-lg p-3 mb-5" style ="background: rgb(14,81,137);
+    background: linear-gradient(90deg, rgba(14,81,137,1) 0%, rgba(7,148,192,1) 59%, rgba(0,211,255,0.9641106442577031) 100%);">
+        <div class="navbar">
+            <div class="logo"><img src="{% static 'img/logo.png' %}" alt="logo_cll" height="100px" width="240px"></div>
+            <div class="cont-btn" style="padding-right: 10px;">
+                <a class="btn btn-dark" href="{% url 'login' %}">Volver al Inicio de Sesión</a>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container" style="padding-top: 10px;">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <div style="background: rgb(224,244,246);
+                    background: linear-gradient(0deg, rgba(224,244,246,0.9052871148459384) 0%, rgba(246,240,224,1) 100%);" class="card">
+                        <div class="card-body">
+                            <h2>Registro de Usuario</h2>
+                            <form method="post" id="userForm">
+                                {% csrf_token %}
+                                {% if form.errors %}
+                                    <span class="border border-danger p-2 mb-2 bg-info bg-opacity-25">
+                                        <div class = "text-danger" id="errors">
+                                            {{form.errors}}
+                                        </div>
+                                    </span>
+                                {% endif %}
+                                {% for field in form %}
+                                    {{field.label_tag}}
+                                    {{field}}
+                                {% for error in field.errors  %}
+                                    {{error}}
+                                {% endfor %}
+                                {% endfor %}
+                                <br>
+                                <input id="btnForm" class="btn btn-dark" type="submit" value="Registrarse">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </main>
+</body>
+</html>
