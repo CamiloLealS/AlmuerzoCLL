@@ -27,7 +27,7 @@ def regDiario(request, id):
     
     user.diario = True
     user.save()
-    messages.add_message(request=request,level=messages.SUCCESS, message='Ya te registraste para el almuerzo de hoy!')
+    messages.add_message(request=request,level=messages.SUCCESS, message='Estás registrad@ para el almuerzo de hoy!')
     return redirect(to='index')
 
 def delRegDiario(request, id):
@@ -38,7 +38,7 @@ def delRegDiario(request, id):
     
     user.diario = False
     user.save()
-    messages.add_message(request=request,level=messages.SUCCESS, message='Fuiste eliminado de la lista de hoy satisfactoriamente.')
+    messages.add_message(request=request,level=messages.SUCCESS, message='Fuiste eliminad@ de la lista de hoy satisfactoriamente.')
     return redirect(to='index')
 
 def delRegAdmin(request):

@@ -32,7 +32,7 @@ background: radial-gradient(circle, rgba(220,228,242,1) 0%, rgba(158,227,225,1) 
         <div class="container container-md" style="padding-top: 10px;">
             <div>
                 {% if messages %}
-                <ul style="list-style: none; display: flex;" class="messages">
+                <ul id = "msg" style="list-style: none; display: flex;" class="messages">
                     {% for message in messages %}
                     <li style="font-size: large;" {%if message.tags %} class="{{ message.tags }} border border-primary p-3 mb-5 bg-info bg-opacity-25" {% endif %}>{{message}}</li>
                     {% endfor %}
@@ -67,7 +67,6 @@ background: radial-gradient(circle, rgba(220,228,242,1) 0%, rgba(158,227,225,1) 
                 </div>
             </div>
         </div>
-        <br>
         {% if user.usuario_admin == True %}
         <div class="container container-md">
             <table id="table"
@@ -101,17 +100,17 @@ background: radial-gradient(circle, rgba(220,228,242,1) 0%, rgba(158,227,225,1) 
 
         {% else %}
         <div style="text-align: center;" class="container container-md">
-            <h3>¿Deseas almorzar hoy en el casino de la <br> Clinica Los Leones?</h3>
             {% if user.diario == False %}
-            <a class="btn btn-primary shadow-lg" href="{% url 'regDiario' user.id %}">Almorzar hoy</a>
+            <h3>¿Deseas almorzar hoy en el casino de la <br> Clinica Los Leones?</h3>
+            <a id="btnRespuesta" class="btn btn-primary shadow-lg" href="{% url 'regDiario' user.id %}">Almorzar hoy</a>
             {% else %}
-            <a class="btn btn-danger shadow-lg" href="{% url 'delDiario' user.id %}">Salir de la lista</a>
+            <h3>¿Ya no deseas almorzar hoy en el casino de la <br> Clinica Los Leones?</h3>
+            <a id="btnRespuesta" class="btn btn-danger shadow-lg" href="{% url 'delDiario' user.id %}">Salir de la lista</a>
             {% endif %}
         </div>
         {% endif %}
 
     </main>
-</body>
 
 <script type="text/javascript">
     function exportTableToExcel(tableID, filename = '') {
@@ -172,4 +171,5 @@ background: radial-gradient(circle, rgba(220,228,242,1) 0%, rgba(158,227,225,1) 
 </script>
 {% endif %}
 
+</body>
 </html>
