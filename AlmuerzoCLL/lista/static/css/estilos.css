@@ -1,0 +1,16 @@
+
+
+#userForm {
+    display: flex;
+    flex-direction: column;
+}
+
+#userForm input[type = "text"], input[type = "email"], input[type = "password"]{
+    display: block;
+    width: 80%;
+    margin-right: 10px;
+}
+
+#btnForm {
+    width: 30%;
+}
